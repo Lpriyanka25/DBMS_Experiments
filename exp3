@@ -1,0 +1,152 @@
+INSERT INTO accounts (account_id, branch, balance)
+VALUES ('A-978245', 'Park Street', 12000);
+
+INSERT INTO customers (name, street, city)
+VALUES ('Ram', 'Main Street', 'Ichalkarnji');
+
+INSERT INTO accounts (account_id, branch, balance) VALUES 
+('A-978245', 'Park Street', 12000),
+('A-123456', 'Main Branch', 25000),
+('A-654321', 'Downtown', 15000),
+('A-987654', 'East Side', 18000),
+('A-111222', 'West End', 20000);
+
+INSERT INTO customers (name, street, city) VALUES 
+('Ram', 'Main Street', 'Ichalkarnji'),
+('Sita', 'Second Street', 'Ichalkarnji'),
+('Ravi', 'Third Avenue', 'Kolhapur'),
+('Aarti', 'Fourth Lane', 'Karnataka'),
+('Vijay', 'Fifth Road', 'Sangli');
+
+
+UPDATE branches
+SET assets = 3400
+WHERE branch_name = 'Perryridge';
+
+
+UPDATE accounts
+SET balance = balance * 1.02
+WHERE balance <= 500;
+
+
+UPDATE accounts
+SET branch = 'Downtown'
+WHERE branch = 'Perryridge';
+
+
+UPDATE loans
+SET branch = 'Downtown'
+WHERE branch = 'Perryridge';
+
+
+UPDATE accounts
+SET balance = balance - 100
+WHERE account_id = 'A-101';
+
+
+UPDATE accounts
+SET balance = balance + 100
+WHERE account_id = 'A-215';
+
+
+BEGIN;
+
+UPDATE accounts
+SET balance = balance - 100
+WHERE account_id = 'A-101';
+
+UPDATE accounts
+SET balance = balance + 100
+WHERE account_id = 'A-215';
+
+COMMIT;
+
+
+
+DELETE FROM branches
+WHERE branch_name = 'Perryridge';
+
+
+DELETE FROM customers
+WHERE city = 'Downtown';
+
+
+DELETE FROM accounts;
+
+SELECT branch_name, assets
+FROM branches;
+
+
+SELECT *
+FROM loans
+WHERE amount > 1000;
+
+SELECT *
+FROM accounts
+WHERE balance < 700;
+
+SELECT *
+FROM accounts
+WHERE branch = 'Perryridge' AND balance < 1000;
+
+SELECT DISTINCT branch_name
+FROM loans;
+
+
+SELECT loan_number
+FROM loans
+WHERE branch = 'Park Street' AND amount > 10000;
+
+
+SELECT loan_number
+FROM loans
+WHERE amount BETWEEN 10000 AND 50000;
+
+
+SELECT name
+FROM customers;
+
+SELECT DISTINCT branch
+FROM loans;
+
+SELECT *
+FROM branches;
+
+
+SELECT account_id
+FROM accounts
+WHERE balance > 700;
+
+
+SELECT account_id, balance
+FROM accounts
+WHERE branch = 'Brighton' AND balance > 800;
+
+
+SELECT branch_name, assets / 1000 AS "assets in thousands"
+FROM branches;
+
+
+SELECT branch_name
+FROM branches
+WHERE assets BETWEEN 1000000 AND 4000000;
+
+
+SELECT name
+FROM customers
+WHERE street LIKE '%Main%';
+
+
+SELECT *
+FROM accounts
+WHERE Bank_Branch LIKE 'Ca%';
+
+
+SELECT *
+FROM accounts
+WHERE Bank_Branch LIKE '_a%' AND LENGTH(Bank_Branch) >= 3;
+
+
+SELECT loan_number
+FROM loans
+WHERE amount IS NULL;
