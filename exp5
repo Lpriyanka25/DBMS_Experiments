@@ -1,0 +1,20 @@
+SELECT loanno,amount FROM loan ORDER BY amount asc;
+SELECT loanno,branchname,amount FROM loan ORDER BY loanno asc;
+
+select * from branch;
+
+SELECT branchname,branchcity,asset FROM branch ORDER BY branchcity desc;
+
+select AVG(asset) FROM branch;
+
+select * from customer;
+select COUNT(custname) from customer;
+
+select COUNT(custname) from customer order by custcity;
+select COUNT(custname) from customer where custcity='Rye' ;
+
+select * from branch;
+select COUNT(branchcity) from branch;
+select AVG(asset) FROM branch where asset > 120000;
+
+CREATE TABLE EMPLOYEE(Emp_no varchar(15), E_name varchar(20), E_address varchar(25), E_ph_no number(15),Dept_no number(10),Dept_name varchar(20),Job_id varchar(10),Designation varchar(15), Salary number(15), joiningdate varchar(15));
