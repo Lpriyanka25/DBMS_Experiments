@@ -1,0 +1,131 @@
+SELECT c.name, l.loan_number
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id
+WHERE l.branch = 'Perryridge';
+
+
+SELECT DISTINCT c.name
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id
+WHERE l.branch = 'Perryridge'
+ORDER BY c.name ASC;
+
+
+SELECT DISTINCT b.branch_name
+FROM branches b
+JOIN accounts a ON b.branch_id = a.branch_id
+JOIN customers c ON a.customer_id = c.customer_id
+WHERE c.city LIKE 'S%';
+
+
+SELECT c.name, l.loan_number, l.amount
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id;
+
+SELECT DISTINCT c.name
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id
+WHERE l.branch = 'Park Street'
+ORDER BY c.name ASC;
+
+
+SELECT c.name, l.loan_number, l.amount
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id;
+
+
+SELECT c.name, l.loan_number, l.amount
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id
+WHERE l.branch = 'Perryridge';
+
+
+SELECT c.name, l.loan_number AS loan_id
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id;
+
+
+SELECT c.name, a.account_number, a.balance
+FROM customers c
+JOIN accounts a ON c.customer_id = a.customer_id;
+
+
+SELECT c.name, l.loan_number, l.amount
+FROM customers c
+JOIN loans l ON c.customer_id = l.customer_id
+WHERE l.branch = 'Perryridge';
+
+
+SELECT c.name, a.account_number, a.balance
+FROM customers c
+JOIN accounts a ON c.customer_id = a.customer_id
+WHERE a.balance <= 400;
+
+
+SELECT *
+FROM accounts
+WHERE branch = 'Brooklyn';
+
+
+Q2
+
+
+SELECT *
+FROM Sailors
+WHERE sid IN (
+    SELECT sid
+    FROM Reserves
+    WHERE bid = 101
+);
+
+
+SELECT b.bname
+FROM Boats b
+JOIN Reserves r ON b.bid = r.bid
+JOIN Sailors s ON r.sid = s.sid
+WHERE s.sname = 'Bob';
+
+
+SELECT DISTINCT s.sname
+FROM Sailors s
+JOIN Reserves r ON s.sid = r.sid
+JOIN Boats b ON r.bid = b.bid
+WHERE b.color = 'red'
+ORDER BY s.age;
+
+
+SELECT DISTINCT s.sname
+FROM Sailors s
+JOIN Reserves r ON s.sid = r.sid;
+
+
+SELECT r1.sid, s.sname
+FROM Reserves r1
+JOIN Reserves r2 ON r1.sid = r2.sid AND r1.bid <> r2.bid AND r1.day = r2.day
+JOIN Sailors s ON r1.sid = s.sid;
+
+
+SELECT DISTINCT r.sid
+FROM Reserves r
+JOIN Boats b ON r.bid = b.bid
+WHERE b.color IN ('red', 'green');
+
+
+SELECT s.sname, s.age
+FROM Sailors s
+WHERE s.age = (SELECT MIN(age) FROM Sailors);
+
+
+SELECT COUNT(DISTINCT sname) AS different_sailor_names
+FROM Sailors;
+
+
+SELECT rating, AVG(age) AS average_age
+FROM Sailors
+GROUP BY rating;
+
+
+SELECT rating, AVG(age) AS average_age
+FROM Sailors
+GROUP BY rating
+HAVING COUNT(*) >= 2;
