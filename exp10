@@ -1,0 +1,54 @@
+CREATE TABLE deleted_accounts (
+    account_number VARCHAR(20),
+    balance DECIMAL(10, 2),
+    deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TRIGGER before_delete_account
+BEFORE DELETE ON accounts
+FOR EACH ROW
+BEGIN
+    -- Store the deleted record in the deleted_accounts table
+    INSERT INTO deleted_accounts (account_number, balance)
+    VALUES (OLD.account_number, OLD.balance);
+    
+    -- Optionally, you can use a SELECT statement to display both tables
+    SELECT * FROM accounts;
+    SELECT * FROM deleted_accounts;
+END;
+
+
+CREATE TRIGGER before_insert_account
+BEFORE INSERT ON accounts
+FOR EACH ROW
+BEGIN
+    IF NEW.balance <= 500 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Balance must be greater than 500';
+    END IF;
+END;
+
+
+CREATE PROCEDURE GetStudentInfo(IN roll_no INT)
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE student_name VARCHAR(100);
+    DECLARE marks DECIMAL(5, 2);
+    DECLARE college_name VARCHAR(100);
+    
+    DECLARE student_cursor CURSOR FOR
+        SELECT name, marks, college FROM students WHERE roll_number = roll_no;
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    OPEN student_cursor;
+
+    read_loop: LOOP
+        FETCH student_cursor INTO student_name, marks, college_name;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+        -- Display the fetched values
+        SELECT student_name, marks, college_name;
+    END LOOP;
+
+    CLOSE student_cursor;
+END;
