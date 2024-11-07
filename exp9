@@ -1,0 +1,254 @@
+Conversation opened. 1 read message.
+
+Skip to content
+Using Gmail with screen readers
+p 
+(no subject)
+Inbox
+
+Payal Khot
+Attachments
+Fri, Oct 18, 11:42 AM
+to Payal, Anushka, me, Shruti
+
+
+ 7 Attachments
+  •  Scanned by Gmail
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Oct 1 07:19:42 2024
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-28002: the password will expire within 3 days
+
+
+Connected.
+SQL> declare
+  2  create table account(account_number varchar(50), balance varchar(50));
+  3  end;
+  4  .
+SQL> create table account(account_number varchar(50), balance varchar(50));
+create table account(account_number varchar(50), balance varchar(50))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table Account2(account_number varchar(50), balance varchar(50));
+
+Table created.
+
+SQL> insert into Account2 values('12345','230000');
+
+1 row created.
+
+SQL> insert into Account2 values('101','1000');
+
+1 row created.
+
+SQL> insert into Account2 values('202','2000');
+
+1 row created.
+
+SQL> select * FROM Account2;
+
+ACCOUNT_NUMBER
+--------------------------------------------------
+BALANCE
+--------------------------------------------------
+12345
+230000
+
+101
+1000
+
+202
+2000
+
+
+SQL> declare
+  2  bal account.balance%type;
+  3  begin
+  4  select balance into bal
+  5  from Account2
+  6  where account_number=101;
+  7  dbms_output.put_line('Balance of account 101 is'||bal);
+  8  end;
+  9  .
+SQL> run;
+  1  declare
+  2  bal account.balance%type;
+  3  begin
+  4  select balance into bal
+  5  from Account2
+  6  where account_number=101;
+  7  dbms_output.put_line('Balance of account 101 is'||bal);
+  8* end;
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> declare
+  2  bal Account2.balance%type;
+  3  begin
+  4  select balance into bal
+  5  from Account2
+  6  where account_number=101;
+  7  dbms_output.put_line('Balance of account 101 is'||bal);
+  8  end;
+  9  .
+SQL> run;
+  1  declare
+  2  bal Account2.balance%type;
+  3  begin
+  4  select balance into bal
+  5  from Account2
+  6  where account_number=101;
+  7  dbms_output.put_line('Balance of account 101 is'||bal);
+  8* end;
+Balance of account 101 is1000
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE TABLE Customer(account_number varchar(50), customer_name char(30), balance varchar(50));
+
+Table created.
+
+SQL> insert into Customer values('101','shruti','100000');
+
+1 row created.
+
+SQL> insert into Customer values('205','priyanka','150000');
+
+1 row created.
+
+SQL> insert into Customer values('300','anushka','200000');
+
+1 row created.
+
+SQL> insert into Customer values('401','prajyot','300000');
+
+1 row created.
+
+SQL> select * FROM Customer;
+
+ACCOUNT_NUMBER
+--------------------------------------------------
+CUSTOMER_NAME
+------------------------------
+BALANCE
+--------------------------------------------------
+101
+shruti
+100000
+
+205
+priyanka
+150000
+
+ACCOUNT_NUMBER
+--------------------------------------------------
+CUSTOMER_NAME
+------------------------------
+BALANCE
+--------------------------------------------------
+
+300
+anushka
+200000
+
+401
+prajyot
+
+ACCOUNT_NUMBER
+--------------------------------------------------
+CUSTOMER_NAME
+------------------------------
+BALANCE
+--------------------------------------------------
+300000
+
+
+SQL> CREATE PROCEDURE GetCustonerBalance(
+  2  IN account_number INT
+  3  )
+  4  BEGIN
+  5  SELECT balance
+  6  FROM Customer
+  7  WHERE account_number = account_number;
+  8  END;
+  9  .
+SQL> EXEC GetCustomerBalance
+BEGIN GetCustomerBalance; END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'GETCUSTOMERBALANCE' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> CREATE PROCEDURE GetCustomerBalance(
+  2  IN p_account_number INT
+  3  )
+  4  BEGIN
+  5  SELECT balance
+  6  FROM Customer
+  7  WHERE account_number = p_account_number;
+  8  END;
+  9  .
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL>
+
+CREATE PROCEDURE GetAccountBalance(
+    IN accountNumber VARCHAR(20),
+    OUT accountBalance DECIMAL(10, 2)
+)
+BEGIN
+    SELECT balance INTO accountBalance
+    FROM accounts
+    WHERE account_number = accountNumber;
+END;
+
+
+CREATE PROCEDURE GetMinSalaryByDept(
+    IN deptNo INT
+)
+BEGIN
+    DECLARE minSalary DECIMAL(10, 2);
+    
+    SELECT MIN(salary) INTO minSalary
+    FROM employees
+    WHERE deptno = deptNo;
+
+    SELECT minSalary AS MinimumSalary;
+END;
+
+
+CREATE FUNCTION CheckDeptAndCountEmployees(
+    IN deptNo INT
+) RETURNS INT
+BEGIN
+    DECLARE empCount INT;
+
+    SELECT COUNT(*) INTO empCount
+    FROM employees
+    WHERE deptno = deptNo;
+
+    IF empCount > 0 THEN
+        RETURN empCount;  -- Return the number of employees if the department exists
+    ELSE
+        RETURN 0;  -- Return 0 if the department does not exist
+    END IF;
+END;
+
+
+exp--9.txt
+Displaying exp--9.txt.
