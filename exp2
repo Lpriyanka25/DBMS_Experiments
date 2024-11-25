@@ -1,3 +1,4 @@
+Q1
 CREATE TABLE EMPLOYEE (
     Emp_no INT PRIMARY KEY,
     E_name VARCHAR(100),
@@ -20,3 +21,40 @@ RENAME COLUMN Emp_no TO E_no;
 
 ALTER TABLE EMPLOYEE
 MODIFY Job_id VARCHAR2(20);
+
+Q2
+CREATE TABLE EMP (
+    EMPNO NUMBER(6),
+    ENAME VARCHAR2(20) NOT NULL,
+    JOB VARCHAR2(10) NOT NULL,
+    DEPTNO NUMBER(3),
+    SAL NUMBER(7, 2)
+);
+
+ALTER TABLE EMP
+ADD CONSTRAINT chk_empno CHECK (EMPNO > 100);
+
+ALTER TABLE EMP
+ADD CONSTRAINT unique_deptno UNIQUE (DEPTNO);
+
+ALTER TABLE EMP
+ADD CONSTRAINT pk_emp PRIMARY KEY (EMPNO);
+
+a.INSERT INTO EMP (EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES (101, 'John', 'Manager', 10, 50000.00);
+
+b.INSERT INTO EMP (EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES (99, 'Alice', 'Clerk', 20, 30000.00);
+-- This will fail due to the check constraint `chk_empno`.
+
+c.INSERT INTO EMP (EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES (102, 'Mike', 'Analyst', 10, 45000.00);
+-- This will fail because `DEPTNO` must be unique.
+
+d.INSERT INTO EMP (EMPNO, DEPTNO, SAL)
+VALUES (103, 30, 35000.00);
+-- This will fail because `ENAME` and `JOB` are `NOT NULL`.
+
+e.INSERT INTO EMP (EMPNO, ENAME, JOB, DEPTNO, SAL)
+VALUES (104, 'Emma', 'Developer', 40, 40000.00);
+-- This will succeed as it satisfies all constraints.
