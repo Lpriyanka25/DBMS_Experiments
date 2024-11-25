@@ -18,3 +18,16 @@ select COUNT(branchcity) from branch;
 select AVG(asset) FROM branch where asset > 120000;
 
 CREATE TABLE EMPLOYEE(Emp_no varchar(15), E_name varchar(20), E_address varchar(25), E_ph_no number(15),Dept_no number(10),Dept_name varchar(20),Job_id varchar(10),Designation varchar(15), Salary number(15), joiningdate varchar(15));
+
+SELECT Job_id, SUM(Salary) AS total_salary
+FROM EMPLOYEE
+GROUP BY Job_id;
+
+SELECT Manager_id, Emp_no, E_name, Salary
+FROM EMPLOYEE AS E1
+WHERE Salary = (
+    SELECT MIN(Salary)
+    FROM EMPLOYEE AS E2
+    WHERE E1.Manager_id = E2.Manager_id
+)
+ORDER BY Manager_id;
