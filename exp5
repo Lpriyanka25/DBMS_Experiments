@@ -31,3 +31,16 @@ WHERE Salary = (
     WHERE E1.Manager_id = E2.Manager_id
 )
 ORDER BY Manager_id;
+
+SELECT Dept_no, Dept_name, COUNT(Emp_no) AS employee_count
+FROM EMPLOYEE
+GROUP BY Dept_no, Dept_name;
+
+SELECT *
+FROM EMPLOYEE
+ORDER BY Salary ASC;
+
+SELECT Dept_no, Dept_name, Emp_no, E_name, Salary
+FROM EMPLOYEE
+WHERE Salary > 16000
+ORDER BY Dept_no, Salary DESC;
